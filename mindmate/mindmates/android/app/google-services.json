@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "983028356182",
+    "project_id": "mindmates-d4849",
+    "storage_bucket": "mindmates-d4849.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983028356182:android:85d5d7733205ebf91257f7",
+        "android_client_info": {
+          "package_name": "com.flutterflow.mindmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983028356182-cltd1vsj2mk8e6uhdoc3f47vv8o6g574.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutterflow.mindmate",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "983028356182-f77gitnkj9cfb9e0kcb6qdu1hgrfsonl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGrHcKjri0YIzoaaJXCxnQjLSttc95-w4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983028356182-f77gitnkj9cfb9e0kcb6qdu1hgrfsonl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "983028356182-91vtl8pl8nimokhmpams4jbqe270qnpj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterflow.mindmate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

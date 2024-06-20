@@ -1,0 +1,6 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "yaml.schemas": {
+        "https://json.schemastore.org/pubspec.json": "file:///c%3A/Users/hp/Documents/mindmates/mindmates/pubspec.yaml"
+    }
+}
