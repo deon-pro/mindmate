@@ -19,7 +19,7 @@ class _PaymentPageState extends State<PaymentPage> {
   double amountInDollars = 0.0;
   double amountInKES = 0.0;
   double availableFundsInDollars = 1000.0;
-  String beneficiaryAccountNumber = '01108854569700';
+  String beneficiaryAccountNumber = '011088854569700';
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
