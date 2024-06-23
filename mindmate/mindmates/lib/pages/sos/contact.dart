@@ -41,7 +41,7 @@ class ContactPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: _launchPhone,
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black, // Change button color to black
+                  backgroundColor: Colors.black, // Change button color to black
                 ),
                 child: Text(
                   'Call 0800 723 253',

@@ -17,7 +17,6 @@ class ProfessionalPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -37,27 +36,32 @@ class ProfessionalPostView extends StatelessWidget {
                 bottom: 0,
                 child: IntrinsicHeight(
                   child: Container(
-                    color: Color.fromARGB(122, 0, 0, 0),
+                    color:
+                        FlutterFlowTheme.of(context).accent1.withOpacity(0.2),
                     padding: EdgeInsets.fromLTRB(30, 20, 0, 30),
                     width: MediaQuery.of(context).size.width,
                     // height: MediaQuery.of(context).size.,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(comment,
-                        style: TextStyle(
-                           color: FlutterFlowTheme.of(context)
-                                      .accent2,
-                        ),
-                        ),
-                        Text(time,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                            color: FlutterFlowTheme.of(context)
-                                      .accent2,
-                        ),
-                        )],
+                    height: 200,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            comment,
+                             style: TextStyle(
+                              color: FlutterFlowTheme.of(context).accent2,
+                            ),
+                          ),
+                          Text(
+                            time,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: FlutterFlowTheme.of(context).accent2,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ))
