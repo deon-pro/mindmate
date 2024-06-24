@@ -63,7 +63,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   "shipping_discount": 0
                                 }
                               },
-                              "description": "Payment for Mindmate❤️",
+                              "description": "Payment for Mindmate Experts❤️",
                               "item_list": {
                                 "items": [
                                   {
@@ -76,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               }
                             }
                           ],
-                          note: "Thank you for supporting mindmate❤️.",
+                          note: "Thank you for supporting and using mindmate❤️.",
                           onSuccess: (Map params) async {
                             savePaymentDetails(params);
                             print("Payment successful: $params");
