@@ -26,7 +26,7 @@ class _ViewProfesionalState extends State<ViewProfesional> {
         FirebaseFirestore.instance.collection('users').doc(widget.data.docid);
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -100,7 +100,7 @@ class _ViewProfesionalState extends State<ViewProfesional> {
                 ),
               ),
               Container(
-                height: 50,
+                height: 64,
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 90),
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -182,7 +182,7 @@ class _ViewProfesionalState extends State<ViewProfesional> {
   margin: EdgeInsets.symmetric(vertical: 10), // Adjust margin as needed
   child: ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: Colors.grey, // Grey background color
+      backgroundColor: Colors.grey, // Grey background color
     ),
     onPressed: () {
       // Add logic to show about me information
@@ -194,7 +194,10 @@ class _ViewProfesionalState extends State<ViewProfesional> {
             content: SingleChildScrollView(
               child: Text(
                 widget.data.about,
-                style: TextStyle(color: Colors.white), // White text color
+                style: TextStyle(
+                  color: FlutterFlowTheme.of(context)
+                                  .primaryText
+                  ), // White text color
               ),
             ),
             actions: [

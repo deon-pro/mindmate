@@ -23,8 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
+  # flutter_localizations:
+  #   sdk: flutter
   auto_size_text: 3.0.0
   cached_network_image: ^3.2.3
   chewie: ^1.7.1
@@ -50,10 +50,10 @@ dependencies:
   firebase_storage_web: ^3.6.7
   flutter_animate: ^4.2.0+1
   flutter_cache_manager: ^3.3.1
-  flutter_google_places: 
-    git:
-      url: https://github.com/fluttercommunity/flutter_google_places
-      ref: v0.3.2
+  # flutter_google_places: 
+  #   git:
+  #     url: https://github.com/fluttercommunity/flutter_google_places
+  #     ref: v0.3.2
   flutter_plugin_android_lifecycle: ^2.0.16
   font_awesome_flutter: ^10.5.0
   from_css_color: 2.0.0

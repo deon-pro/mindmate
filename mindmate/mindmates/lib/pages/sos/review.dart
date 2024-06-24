@@ -158,7 +158,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       : null,
                   child: Text('Submit'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blueAccent,
+                    backgroundColor: Colors.blueAccent,
                   ),
                 ),
                 SizedBox(height: 20),
