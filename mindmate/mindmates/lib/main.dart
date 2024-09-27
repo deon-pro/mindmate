@@ -232,9 +232,6 @@ class _NavBarPageState extends State<NavBarPage> {
 }
 
 
-//  String mind = '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';
-// final String apiKey =
-//       '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'; // Replace with your actual API key
 
 
 
