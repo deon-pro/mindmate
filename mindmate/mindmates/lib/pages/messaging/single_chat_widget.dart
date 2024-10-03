@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mindmates/auth/firebase_auth/auth_util.dart';
+import 'package:mindmates/components/notifications/model.dart';
 import 'package:mindmates/flutter_flow/flutter_flow_theme.dart';
 import 'package:mindmates/pages/post_details/post_view.dart';
 import 'package:mindmates/pages/public_profile/public_profile.dart';
@@ -248,53 +249,7 @@ class _SingleChatWidgetState extends State<SingleChatWidget> {
     }
   }
 
-  void sendAndRetrieveMessageOne(fcmToken, message, name) async {
-    // await firebaseMessaging.requestNotificationPermissions(
-    //   const IosNotificationSettings(
-    //       sound: true, badge: true, alert: true, provisional: false),
-    // );
-    if (widget.token == null) {
-      return;
-    }
-
-    var body = jsonEncode(<String, dynamic>{
-      'notification': <String, dynamic>{'body': message, 'title': "$name"},
-      'priority': 'high',
-      'data': <String, dynamic>{
-        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-        'id': '1',
-        'status': 'done',
-        // "type": NotificationType.Message.toString(),
-        "senderId": currentUserUid,
-        "receiverId": widget.receiverId,
-        "title": "$name",
-        "body": message,
-      },
-      'to': fcmToken
-    });
-    var response =
-        await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-              'Authorization': 'key=$server',
-            },
-            body: body);
-    _msgController.clear();
-    if (response.statusCode == 401) {
-      print(
-          "Unauthorized access. Please check your FCM server key.\n\n${response.body.toString()}");
-      return;
-    }
-    if (response.reasonPhrase!.contains("INVALID_KEY")) {
-      print(
-        "You are using Invalid FCM key",
-        // e: "sendAndRetrieveMessage",
-      );
-      return;
-    }
-    print(response.body.toString());
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     List<String> sortedIds = [currentUserUid, widget.receiverId]..sort();
@@ -1348,10 +1303,11 @@ class _SingleChatWidgetState extends State<SingleChatWidget> {
                                     GestureDetector(
                                       onTap: () async {
                                         sendPhoto('', '', '').then((value) =>
-                                            sendAndRetrieveMessageOne(
-                                                widget.token,
-                                                '$currentUserName sent a photo',
-                                                currentUserName));
+                                            NotifModel().sendFCMMessage(
+           widget.token,
+                                             '$currentUserName sent a photo',
+          server,
+          currentUserName));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -1368,11 +1324,11 @@ class _SingleChatWidgetState extends State<SingleChatWidget> {
                                         if (_msgController.text.trim() != '') {
                                           sendMessage('text', '', '', '').then(
                                               (value) =>
-                                                  sendAndRetrieveMessageOne(
-                                                      widget.token,
-                                                      _msgController.text
-                                                          .trim(),
-                                                      currentUserName));
+                                                    NotifModel().sendFCMMessage(
+           widget.token,
+                                              _msgController.text.trim(),
+          server,
+          currentUserName));
                                           // String replyid, String replyContent, String replyType
                                         }
                                       },
@@ -1582,10 +1538,11 @@ class _SingleChatWidgetState extends State<SingleChatWidget> {
                               onTap: () async {
                                 Navigator.pop(context);
                                 sendPhoto(repId, repContent, repType).then(
-                                    (value) => sendAndRetrieveMessageOne(
-                                        widget.token,
-                                        '$currentUserName sent a photo',
-                                        currentUserName));
+                                    (value) =>    NotifModel().sendFCMMessage(
+           widget.token,
+                                             '$currentUserName sent a photo',
+          server,
+          currentUserName));
                                 // String replyid, String replyContent, String replyType
                               },
                               child: Container(
@@ -1604,10 +1561,13 @@ class _SingleChatWidgetState extends State<SingleChatWidget> {
                                   sendMessage(
                                           'text', repId, repContent, repType)
                                       .then((value) =>
-                                          sendAndRetrieveMessageOne(
-                                              widget.token,
+                                        NotifModel().sendFCMMessage(
+           widget.token,
                                               _msgController.text.trim(),
-                                              currentUserName));
+          server,
+          currentUserName)
+
+                                         );
                                 }
                               },
                               child: Icon(

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mindmates/auth/firebase_auth/auth_util.dart';
+import 'package:mindmates/components/notifications/model.dart';
 import 'package:mindmates/flutter_flow/flutter_flow_theme.dart';
 import 'package:mindmates/pages/messaging/add_users_list.dart';
 import 'package:mindmates/pages/messaging/group_info_edit.dart';
@@ -41,8 +42,7 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
   final picker = ImagePicker();
   bool isExpanded = false;
   List<String> groupMemberTokens = [];
-  String server =
-      '';
+  String server = '';
 
   List<File> _imageFiles = [];
   // String receiverId = 'AA2TvlRX6tgYJFsCHkjt5tN73fs1';
@@ -230,8 +230,8 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     });
   }
-  
-   void getFCMServerKey() async {
+
+  void getFCMServerKey() async {
     final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetchAndActivate();
     // await remoteConfig.
@@ -241,14 +241,15 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
       setState(() {
         server = data;
       });
-        print("CORRECT configure Remote config in firebase: $server",
-          );
+      print(
+        "CORRECT configure Remote config in firebase: $server",
+      );
     } else {
-      print("Please configure Remote config in firebase",
-          );
+      print(
+        "Please configure Remote config in firebase",
+      );
     }
   }
-
 
   Future<void> fetchGroupMemberTokens() async {
     try {
@@ -279,54 +280,6 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
     } catch (e) {
       print('Error fetching group member tokens: $e');
     }
-  }
-
-  void sendAndRetrieveMessageOne(fcmToken, message, name) async {
-    // await firebaseMessaging.requestNotificationPermissions(
-    //   const IosNotificationSettings(
-    //       sound: true, badge: true, alert: true, provisional: false),
-    // );
-    if (fcmToken == null) {
-      return;
-    }
-
-    var body = jsonEncode(<String, dynamic>{
-      'notification': <String, dynamic>{'body': message, 'title': "$name"},
-      'priority': 'high',
-      'data': <String, dynamic>{
-        'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-        'id': '1',
-        'status': 'done',
-        // "type": NotificationType.Message.toString(),
-        "senderId": currentUserUid,
-        // "receiverId": widget.receiverId,
-        "title": "$name",
-        "body": message,
-      },
-      // 'to': fcmToken
-      'registration_ids': fcmToken, // Use registration_ids for multiple users
-    });
-    var response =
-        await http.post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
-            headers: <String, String>{
-              'Content-Type': 'application/json',
-              'Authorization': 'key=$server',
-            },
-            body: body);
-    _msgController.clear();
-    if (response.statusCode == 401) {
-      print(
-          "Unauthorized access. Please check your FCM server key.\n\n${response.body.toString()}");
-      return;
-    }
-    if (response.reasonPhrase!.contains("INVALID_KEY")) {
-      print(
-        "You are using Invalid FCM key",
-        // e: "sendAndRetrieveMessage",
-      );
-      return;
-    }
-    print(response.body.toString());
   }
 
   @override
@@ -1272,8 +1225,8 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                       minLines: 1,
                       maxLines: 5,
                       style: TextStyle(
-                                          color: Colors.grey[700],
-                                        ),
+                        color: Colors.grey[700],
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Send message...',
                         hintStyle: TextStyle(
@@ -1313,10 +1266,11 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      sendPhoto('', '', '').then((value) =>
-                          sendAndRetrieveMessageOne(
+                      sendPhoto('', '', '').then((value) => NotifModel()
+                          .sendFCMMessage(
                               groupMemberTokens,
-                              '$currentUserName: sent a photo',
+                              '$currentUserName sent a photo',
+                              server,
                               widget.groupName));
                     },
                     child: Container(
@@ -1331,9 +1285,10 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                     onTap: () async {
                       if (_msgController.text.trim() != '') {
                         sendMessage('text', '', '', '').then((value) =>
-                            sendAndRetrieveMessageOne(
+                            NotifModel().sendFCMMessage(
                                 groupMemberTokens,
                                 '$currentUserName: ${_msgController.text.trim()}',
+                                server,
                                 widget.groupName));
                         // String replyid, String replyContent, String replyType
                       }
@@ -1501,8 +1456,8 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                                 minLines: 1,
                                 maxLines: 5,
                                 style: TextStyle(
-                                          color: Colors.grey[700],
-                                        ),
+                                  color: Colors.grey[700],
+                                ),
                                 decoration: InputDecoration(
                                   hintText: 'Send a reply...',
                                   hintStyle: TextStyle(
@@ -1544,10 +1499,12 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                               onTap: () async {
                                 Navigator.pop(context);
                                 sendPhoto(repId, repContent, repType).then(
-                                    (value) => sendAndRetrieveMessageOne(
+                                    (value) => NotifModel().sendFCMMessage(
                                         groupMemberTokens,
-                                        '$currentUserName: sent a photo',
+                                        '$currentUserName sent a photo',
+                                        server,
                                         widget.groupName));
+
                                 // String replyid, String replyContent, String replyType
                               },
                               child: Container(
@@ -1565,9 +1522,10 @@ class _GroupChatWidgetState extends State<GroupChatWidget> {
                                   Navigator.pop(context);
                                   sendMessage(
                                           'text', repId, repContent, repType)
-                                      .then((value) => sendAndRetrieveMessageOne(
+                                      .then((value) => NotifModel().sendFCMMessage(
                                           groupMemberTokens,
                                           '$currentUserName: ${_msgController.text.trim()}',
+                                          server,
                                           widget.groupName));
                                 }
                               },

@@ -249,13 +249,13 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: isDarkMode ? Brightness.dark : Brightness.light,
-      ),
+      // debugShowCheckedModeBanner: false,
+      // theme: ThemeData(
+      //   brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      // ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          // backgroundColor: Colors.black,
           centerTitle: true,
           title: Text("MindMate AI Assistant"),
           actions: [
@@ -265,7 +265,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 value: isDarkMode,
                 onChanged: (value) {
                   setState(() {
-                    isDarkMode = value;
+                    // isDarkMode = value;
                   });
                 },
               ),
@@ -303,7 +303,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           ),
         ),
         body: Container(
-          color: Colors.black,
+          // color: Colors.black,
           child: Column(
             children: <Widget>[
               Flexible(

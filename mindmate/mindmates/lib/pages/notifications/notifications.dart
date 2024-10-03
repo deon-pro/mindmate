@@ -85,11 +85,11 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        // backgroundColor: Colors.black,
         title: Text('Notification'),
       ),
       body: Container(
-        color: Colors.black, // Set background color to black
+        // color: Colors.black, // Set background color to black
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('notifications')

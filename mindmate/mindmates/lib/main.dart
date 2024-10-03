@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:mindmates/components/notifications/helper.dart';
 import 'package:mindmates/professionals.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
@@ -23,6 +25,9 @@ void main() async {
   usePathUrlStrategy();
   await initFirebase();
   await FlutterFlowTheme.initialize();
+  NotificationHelper().setupFlutterNotifications();
+  FirebaseMessaging.onBackgroundMessage(NotificationHelper().firebaseMessagingBackgroundHandler);
+
   runApp(MyApp());
 }
 
@@ -45,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    NotificationHelper().initializeFirebaseMessaging();
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = mindmatesFirebaseUserStream()

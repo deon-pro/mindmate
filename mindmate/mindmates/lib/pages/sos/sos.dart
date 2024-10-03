@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:mindmates/flutter_flow/flutter_flow_icon_button.dart';
+import 'package:mindmates/flutter_flow/flutter_flow_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mindmates/pages/sos/contact.dart';
 import 'package:mindmates/pages/sos/calm.dart';
@@ -52,9 +54,14 @@ class SosButtonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 75, 57, 239),
+      // backgroundColor: Color.fromARGB(255, 75, 57, 239),
       appBar: AppBar(
-        title: Text('SOS Button'),
+        title: Text('Mindmate SOS',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+            ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,6 +75,9 @@ class SosButtonPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: FlutterFlowTheme.of(context).secondary,
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -146,7 +156,7 @@ class SosButtonPage extends StatelessWidget {
   onTap: () {
     
   
-    launch('https://www.jigsawplanet.com/');
+    launch('https://game.tammeir.com/');
   },
   child: ListTile(
     leading: Icon(Icons.gamepad),

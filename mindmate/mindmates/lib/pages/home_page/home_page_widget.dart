@@ -377,7 +377,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     },
                     child: Text(
                       'SOS',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                     
+
+                      ),
                     )),
               )),
           Padding(
@@ -391,6 +395,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(16))),
                       backgroundColor: Color.fromARGB(255, 75, 57, 239),
+                      foregroundColor: Colors.white,
 
                       // maximumSize: Size(40, 20),
                     ),

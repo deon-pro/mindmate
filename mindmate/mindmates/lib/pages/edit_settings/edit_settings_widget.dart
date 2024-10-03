@@ -1,6 +1,8 @@
 // ignore_for_file: unused_import
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mindmates/pages/admin/professional_verification.dart';
+import 'package:mindmates/pages/admin/till_payment.dart';
 import 'package:mindmates/pages/attempt.dart';
 import 'package:mindmates/pages/chat_page_remake/chat_tab_page.dart';
 import 'package:mindmates/pages/messaging/single_chat_widget.dart';
@@ -511,7 +513,7 @@ class _EditSettingsWidgetState extends State<EditSettingsWidget>
                           ),
                         ),
                         userAc!.email == 'deniskyalo28@gmail.com' ||
-                                userAc!.email == 'deondiop@gmail.com'
+                                userAc!.email == 'deondiop@gmail.com' || userAc!.email == 'dean404e@gmail.com'
                             ? Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 1.0),
@@ -543,6 +545,71 @@ class _EditSettingsWidgetState extends State<EditSettingsWidget>
                                                   24.0, 0.0, 0.0, 0.0),
                                           child: Text(
                                             'Approve Professionals',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0.0),
+                                            child: Icon(
+                                              Icons.star_rounded,
+                                              color: Color(0xFF95A1AC),
+                                              size: 22.0,
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(0.9, 0.0),
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Color(0xFF95A1AC),
+                                              size: 18.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
+                             userAc!.email == 'deniskyalo28@gmail.com' ||
+                                userAc!.email == 'deondiop@gmail.com' || userAc!.email == 'dean404e@gmail.com'
+                            ? Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 1.0),
+                                child: Container(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  height: 50.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    shape: BoxShape.rectangle,
+                                  ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdminPendingPaymentsPage()));
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  24.0, 0.0, 0.0, 0.0),
+                                          child: Text(
+                                            'Approve Payments',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
                                           ),
@@ -658,6 +725,54 @@ class _EditSettingsWidgetState extends State<EditSettingsWidget>
                                   ),
                                 ),
                         ),
+                        isProfessional
+                              ? Container(
+                          width: MediaQuery.sizeOf(context).width * 1.0,
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              
+                               Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            ConfirmationPage()));
+                                  
+                              // context.pushNamed('changePassword');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Verify Payment',
+                                    style:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Align(
+                                    alignment: AlignmentDirectional(0.9, 0.0),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color(0xFF95A1AC),
+                                      size: 18.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ) : Container(),
                         Container(
                           width: MediaQuery.sizeOf(context).width * 1.0,
                           height: 50.0,

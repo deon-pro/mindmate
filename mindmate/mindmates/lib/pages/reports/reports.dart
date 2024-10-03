@@ -70,7 +70,7 @@ class _ReportScreenState extends State<ReportScreen> {
       );
     }
 
-    if (currentUser!.email != 'deniskyalo28@gmail.com') {
+    if (currentUser!.email != 'deniskyalo28@gmail.com' || currentUser!.email != 'dean404e@gmail.com') {
       return Scaffold(
         appBar: AppBar(
           title: Text('Mental Health Report'),

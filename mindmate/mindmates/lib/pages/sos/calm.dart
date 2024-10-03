@@ -31,10 +31,13 @@ class MentalHealthPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              'Take a moment to relax and breathe deeply.',
-              style: TextStyle(
-                fontSize: 16.0,
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                'Take a moment to relax and breathe deeply.',
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -55,15 +58,15 @@ class _CalmingAnimationState extends State<CalmingAnimation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200.0,
-      height: 200.0,
+      width: 220.0,
+      height: 220.0,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Colors.blue, Colors.purple],
         ),
-        borderRadius: BorderRadius.circular(100.0),
+        borderRadius: BorderRadius.circular(110.0),
       ),
       child: Center(
         child: BreathingAnimation(),
@@ -109,9 +112,9 @@ class _BreathingAnimationState extends State<BreathingAnimation>
         Text(
           breathText,
           style: TextStyle(
-            fontSize: 24.0,
+            fontSize: 21.0,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: Colors.white,
           ),
         ),
         SizedBox(height: 10),

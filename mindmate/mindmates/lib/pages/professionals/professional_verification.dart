@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:mindmates/components/notifications/model.dart';
 import 'package:mindmates/pages/professionals/professional_requests.dart';
 
 class VerifyProfesional extends StatefulWidget {
@@ -11,9 +14,52 @@ class VerifyProfesional extends StatefulWidget {
 }
 
 class _VerifyProfesionalState extends State<VerifyProfesional> {
+  String server = "";
+  Map<String, dynamic>? userInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    getFCMServer();
+    getCurrentUserDetails();
+  }
+
+  Future<void> getCurrentUserDetails() async {
+    // String userId = FirebaseAuth.instance.currentUser!.uid;
+    try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(widget.data.docid)
+          .get();
+
+      if (userSnapshot.exists) {
+        setState(() {
+          userInfo = userSnapshot.data() as Map<String, dynamic>;
+        });
+      } else {
+        print('User does not exist in the database.');
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+  }
+
+  void getFCMServer() async {
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+    // await remoteConfig.
+    var data = remoteConfig.getString('FCM');
+    if (data.isNotEmpty) {
+      // String serverToken = jsonDecode(data)["FCM"];
+      setState(() {
+        server = data;
+      });
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
-   // String profilePic = widget.data.profile;
+    // String profilePic = widget.data.profile;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -57,8 +103,11 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                               // Implement delete functionality here
                               // For example, delete the image from Firestore
                               // Then close the dialog
-                           
-                                FirebaseFirestore.instance.collection('mental_health_professionals').doc(widget.data.userid).set({
+
+                              FirebaseFirestore.instance
+                                  .collection('mental_health_professionals')
+                                  .doc(widget.data.userid)
+                                  .set({
                                 'name': widget.data.name,
                                 'aboutMe': widget.data.about,
                                 'education': widget.data.education,
@@ -72,15 +121,26 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                                 'rate': widget.data.rate,
                                 'verified': true,
                                 'id': widget.data.userid,
-                                'professional': 'professional', //PLEASE DON'T REMOVE THIS
+                                'professional':
+                                    'professional', //PLEASE DON'T REMOVE THIS
                                 'codec': 101 //PLEASE DON'T REMOVE THIS
                               });
 
                               // Update the document to add the ID field
                               // await documentRef.update({'id': documentRef.id});
 
-                              await FirebaseFirestore.instance.collection('professional_verification').doc(widget.data.docid).update({'verified': true}).then((_) => print('Deleted')).catchError((error) => print('Delete failed: $error'));
-
+                              await FirebaseFirestore.instance
+                                  .collection('professional_verification')
+                                  .doc(widget.data.docid)
+                                  .update({'verified': true})
+                                  .then((_) => print('Deleted'))
+                                  .catchError((error) =>
+                                      print('Delete failed: $error'));
+                              NotifModel().sendFCMMessage(
+                                  userInfo!['token'],
+                                  'Congratulations! Your professional Profile has been approved.',
+                                  server,
+                                  'Mindmate');
                               Navigator.pop(context);
                               Navigator.of(context).pop();
                             },
@@ -114,7 +174,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
               );
             },
             child: Container(
-               padding: const EdgeInsets.fromLTRB(10, 15, 20, 10),
+              padding: const EdgeInsets.fromLTRB(10, 15, 20, 10),
               child: Text(
                 'Approve',
                 style: TextStyle(
@@ -169,13 +229,12 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
               Container(
                 margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: CircleAvatar(
-  radius: 60,
-  foregroundImage: widget.data.profile.isNotEmpty
-      ? NetworkImage(widget.data.profile)
-      : null,
-  child: const Icon(Icons.person),
-),
-
+                  radius: 60,
+                  foregroundImage: widget.data.profile.isNotEmpty
+                      ? NetworkImage(widget.data.profile)
+                      : null,
+                  child: const Icon(Icons.person),
+                ),
               ),
               Container(
                 height: 500,
@@ -209,10 +268,8 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                       ),
                     ),
                     Column(
-                      
                       children: [
                         Container(
-                         
                           child: Text(
                             'Bio',
                             style: TextStyle(
@@ -225,7 +282,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                           width: MediaQuery.of(context).size.width * .88,
+                          width: MediaQuery.of(context).size.width * .88,
                           child: Text(
                             widget.data.about,
                             style: TextStyle(
@@ -243,7 +300,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                         children: [
                           Icon(Icons.school),
                           Container(
-                             alignment: Alignment.center,
+                            alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * .88,
                             child: Text(
                               widget.data.education,
@@ -258,12 +315,12 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                         ],
                       ),
                     ),
-                     Container(
+                    Container(
                       child: Column(
                         children: [
                           Icon(Icons.email),
                           Container(
-                             alignment: Alignment.center,
+                            alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * .88,
                             child: Text(
                               widget.data.email,
@@ -278,7 +335,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                         ],
                       ),
                     ),
-                      Container(
+                    Container(
                       height: 50,
                       width: MediaQuery.of(context).size.width * .7,
                       child: ElevatedButton(
@@ -288,7 +345,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                                       BorderRadius.all(Radius.circular(20))),
                               backgroundColor: Colors.grey[500]),
                           onPressed: () {},
-                          child:  Text(
+                          child: Text(
                             'View License(${widget.data.license})',
                             style: TextStyle(
                               color: Colors.white,
@@ -305,7 +362,7 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                                       BorderRadius.all(Radius.circular(20))),
                               backgroundColor: Colors.grey[500]),
                           onPressed: () {},
-                          child:  Text(
+                          child: Text(
                             'Message(${widget.data.phone})',
                             style: TextStyle(
                               color: Colors.white,
@@ -322,7 +379,6 @@ class _VerifyProfesionalState extends State<VerifyProfesional> {
                 color: Colors.white,
                 // child: Text('Professional Posts'),
               ),
-             
             ],
           ),
         ),
