@@ -117,13 +117,18 @@ class _MindmateSearchBarState extends State<MindmateSearchBar> {
               );
             }).toList();
 
+            // Filter users based on search text
+            List<QueryUser> filteredUsers = allQueryUsers.where((user) {
+              return user.username.toLowerCase().contains(searchText);
+            }).toList();
+
             return ListView.builder(
-              itemCount: allQueryUsers.length,
+              itemCount: filteredUsers.length,
               itemBuilder: (context, index) {
                 var isFollowingBack =
-                    followingUserIds.contains(allQueryUsers[index].userid);
+                    followingUserIds.contains(filteredUsers[index].userid);
 
-                return allQueryUsers[index].userid == userAc!.uid
+                return filteredUsers[index].userid == userAc!.uid
                     ? Container()
                     : StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
@@ -149,13 +154,13 @@ class _MindmateSearchBarState extends State<MindmateSearchBar> {
                                 .toString(),
                           ));
                           bool isProfessional = existingUser
-                              .contains(allQueryUsers[index].userid);
+                              .contains(filteredUsers[index].userid);
 
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PublicProfile(
-                                  userid: allQueryUsers[index].userid,
+                                  userid: filteredUsers[index].userid,
                                   isProfessional: isProfessional,
                                 ),
                               ));
@@ -163,15 +168,15 @@ class _MindmateSearchBarState extends State<MindmateSearchBar> {
                             child: ListTile(
                               leading: CircleAvatar(
                                 radius: 20,
-                                foregroundImage: allQueryUsers[index].profile !=
+                                foregroundImage: filteredUsers[index].profile !=
                                         ''
-                                    ? NetworkImage(allQueryUsers[index].profile)
+                                    ? NetworkImage(filteredUsers[index].profile)
                                     : null,
                                 child: const Icon(Icons.person),
                               ),
                               title: Row(
                                 children: [
-                                  Text(allQueryUsers[index].username),
+                                  Text(filteredUsers[index].username),
                                   isProfessional
                                       ? Padding(
                                           padding:
@@ -189,13 +194,13 @@ class _MindmateSearchBarState extends State<MindmateSearchBar> {
                                 onPressed: () {
                                   setState(() {
                                     if (isFollowingBack) {
-                                      unfollow(allQueryUsers[index].userid);
+                                      unfollow(filteredUsers[index].userid);
                                       followingUserIds
-                                          .remove(allQueryUsers[index].userid);
+                                          .remove(filteredUsers[index].userid);
                                     } else {
-                                      follow(allQueryUsers[index].userid);
+                                      follow(filteredUsers[index].userid);
                                       followingUserIds
-                                          .add(allQueryUsers[index].userid);
+                                          .add(filteredUsers[index].userid);
                                     }
                                   });
                                 },
