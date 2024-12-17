@@ -130,7 +130,7 @@ dependencies:
   fl_chart: ^0.67.0
   cloud_functions: ^4.4.2
   flutter_local_notifications: ^17.2.3
-  googleapis_auth: ^1.6.0
+  googleapis_auth: 1.4.1
   # package_info_plus: ^4.2.0
  
  
