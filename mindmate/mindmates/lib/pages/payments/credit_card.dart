@@ -47,8 +47,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) => UsePaypal(
-                          clientId: "AeJcqW1ywdI7XAnA4hWJNvxn2ldW7AMAwOtw9H55vEHym5KFNn47MPJNI2T7Vq_6Pv8hOdjn-hmBgNIQ",
-                          secretKey: "ENKAEMCdXjGikdxQOjQrIPGMQV3fmzukdukynAKUDbbtzn5p2HJ7YIC0OeCP_Umm4pCSLR6Nw5i2hNLL",
+                          clientId: "AYC5wXNbfVaN3-2BOTAP2D6yY51yCk4Dq-Awk4aiiIx6njG-7KL3K8RKCfDUmhLqSJq7JdfNxZiSu-Do",
+                          secretKey: "ECIHld2xW4Lemhuc4nUEirdq5z2MSt-RefWs9DWgFtExAIhx9Qt4preitR47ePKCWqYlbvTnwtxNfSDY",
                           returnURL: "https://bluecodeinfinity.com/return",
                           cancelURL: "https://bluecodeinfinity.com/cancel",
                           transactions: [

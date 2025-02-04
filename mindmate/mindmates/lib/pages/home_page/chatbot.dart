@@ -148,7 +148,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           'Authorization': 'Bearer $apiKey'
         },
         body: jsonEncode({
-          'model': 'gpt-3.5-turbo-0613',
+          'model': 'gpt-4',
           'temperature': 0.6,
           'messages': messages
               .map((msg) => {'role': msg['role'], 'content': msg['content']})
